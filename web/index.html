@@ -1,40 +1,32 @@
-<!DOCTYPE HTML>
-	<html>
-		<head>
-			<meta charset="UTF-8">
-			<link rel = "stylesheet" type=text/css href="//localhost/projetweb-static/css/base.css">
-			<link rel = "stylesheet" type=text/css href="//localhost/projetweb-static/css/gui.css">
-			<link rel = "stylesheet" type=text/css href="//localhost/projetweb-static/css/scene.css">
-			<link rel = "stylesheet" type=text/css href="//localhost/projetweb-static/css/infos.css">
-		</head>
-		<body>
-		
-		<div id = "screen">
-			<div id = "player" class="character samourai"></div>
-			<div id = "ennemy-1" class="character kankrelat"></div>
-			<div id = "ennemy-2" class="character kankrelat"></div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="/projetweb-static/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="/projetweb-static/css/scene.css"/>
+<link rel="stylesheet" type="text/css" href="/projetweb-static/css/gui.css"/>
+<link rel="stylesheet" type="text/css" href="/projetweb-static/css/infos.css"/>
+
+<script type="text/javascript" src="/projetweb-static/js/page.js"></script>
+<script type="text/javascript" src="/projetweb-static/js/InfoPage.js"></script>
+<script type="text/javascript" src="/projetweb-static/js/main.js"></script>
+<script type="text/javascript" src="/projetweb-static/js/Window.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+<title>Cours Web</title>
+</head>
+<body onload = "start()">
+<div id="screen">
+	<div class="scene-view">
+		<div class="scene">
+			<div id = "main-scene" class="scene"></div>
 		</div>
-		<div id = "profile-window" class = "window">
-			<ul class = "menu">
-				<li class = "selected">Infos</li>
-				<li>Equipement</li>
-				<li>Statistiques</li>
-			</ul>
-			<div id = "content">
-				<div id = "profil-title">
-					<div id = "name">Ulrich</div>
-					<div id = "classe">Samouraï</div>
-					<div id = "stars">**</div>
-				</div>
-			</div>
-			
-			
-			<table id = "statsperso">
-				<tr><td class = "stats">XP</td><td class = "xp">456</td></tr>
-				<tr><td class = "stats">HP</td><td class = "hp">125</td></tr>
-				<tr><td class = "stats">Puissance</td><td class = "puissance">12</td></tr>
-			</table>
-		</div>
-		
-		</body>
-	</html>
+	</div>
+	<div id="gui"></div>
+</div>
+</body>
+</html>
