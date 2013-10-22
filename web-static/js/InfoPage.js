@@ -2,6 +2,7 @@
 var InfoPage = function(){
 	Page.call(this, "");
 	
+	// Objet JQuery => un dollar ($) devant un objet pour savoir que c'est un objet JQuery (c'est juste une convention)
 	this.$playerPreview = $("<div/>").addClass("player-preview");
 	this.append(this.$playerPreview);
 
@@ -27,12 +28,21 @@ var InfoPage = function(){
 InfoPage.prototype = new Page();
 
 InfoPage.prototype.refreshData = function(playerData){
-	
+	for(var id in playerData){
+		this.attributeList[id].html(playerData[id]).effect('pulsate',{times:5, duration: 300});
+		
+		this.$playerProgressIndic.css("width", playerData);
+	}
 };
+
 InfoPage.prototype.addAttribute = function(id, label){
-	this.$attributeContainer.append($("<dt>").html(label));
+	//id = classe du dd
+	//label => dt
 	
-	var $dd = $("<dd>").addClass(id).html("0");
+	var $dt = $("<dt>").append(label);
+	this.$attributeContainer.append($dt);
+	var $dd = $("<dd>").addClass(id).append(15);
 	this.$attributeContainer.append($dd);
+	
 	this.attributeList[id] = $dd;
 };

@@ -1,8 +1,7 @@
 var Page = function(content){
 	this.root = document.createElement("div");
 	this.root.innerHTML = content;
-	
-	this.currentPage = null;
+	this.setVisible(false);
 };
 Page.prototype.append = function(content){
 	if(typeof(content) == "string"){
@@ -12,5 +11,10 @@ Page.prototype.append = function(content){
 	}
 };
 Page.prototype.setVisible = function(visible){
-	this.root.style.display = visible?"block":"none";
+	//this.root.style.display = visible?"block":"none";
+	if(visible){
+		$(this.root).show("slide");
+	}else{
+		$(this.root).hide("slide");
+	}
 };
