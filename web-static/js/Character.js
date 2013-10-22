@@ -17,6 +17,8 @@ var Character = function(parent){
 
 Character.prototype.addPositionListener = function(listener){
 	// TODO
+	this.positionListenerList.push(listener);
+	
 };
 
 Character.prototype.setSprite = function(anim, onComplete){
@@ -41,6 +43,20 @@ Character.prototype.setSprite = function(anim, onComplete){
 
 Character.prototype.setPosition = function(x, y){
 	// TODO
+	this.x = parseInt(x);
+	this.y = parseInt(y);
+	
+//	this.$elm.css("top", "20px");
+	this.$elm.css({
+		top: this.y + "px",
+		left: this.x + "px"
+	});
+	
+	for(var i in this.positionListenerList)
+	{
+		this.positionListenerList[i](this.x, this.y);
+	}
+	
 };
 Character.prototype.moveTo = function(x, y){
 	var self = this;

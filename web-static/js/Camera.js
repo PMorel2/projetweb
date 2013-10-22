@@ -4,7 +4,9 @@ var Camera = function(scene, player){
 	this.scene = scene;
 	this.player = player;
 	
-	// TODO
+	this.player.addPositionListener(function(x, y){
+		self.refreshView(x, y);
+	});			///////////////////////////////////////////////////////////////////////////////////////
 	
 	this.x = 0;
 	this.y = 0;
@@ -37,7 +39,7 @@ Camera.prototype.refreshView = function(playerX, playerY){
 		newY = Camera.MAX_Y;
 	}
 	
-	$.ease({x: this.x, y: this.y}, {x: newX, y: newY}, function(o){
+	$.ease({x: this.x, y: this.y}, {x: newX, y: newY}, function(o){						///////////////////////////////////////////////////////////////////////////////////////////
 		self.legacyX = Math.round(o.x);
 		self.legacyY = Math.round(o.y);
 		self.setViewPosition(Math.round(o.x), Math.round(o.y));
@@ -56,7 +58,12 @@ Camera.prototype.shake = function(factor){
 	// TODO
 };
 Camera.prototype.setViewPosition = function(x, y){
-	// TODO
-	this.x = x;
-	this.y = y;
+	
+	//console.log(this.x + "  " + this.y);
+	this.x = parseInt(x);
+	this.y = parseInt(y);
+	this.scene.css({																			////////////////////////////////////////////////////////////////////////////
+		top: this.y + "px",
+		left: this.x + "px"
+	});
 };

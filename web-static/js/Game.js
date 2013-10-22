@@ -37,10 +37,6 @@ var Game = function(){
 
 	player.setPosition(3530, 1770);
 	player.init();
-
-	camera = new Camera($scene, player);
-
-	player.setPosition(3530, 1770);
 	
 	requestAnimFrame(
 		function loop() {

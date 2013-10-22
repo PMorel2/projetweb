@@ -36,7 +36,7 @@ Player.prototype.setPosition = function(x, y){
 	
 	if(this.y != lastY){
 		var factor = (y - Player.MIN_Y) / (Player.MAX_Y - Player.MIN_Y);
-		this.setScale(factor * (Player.MAX_SCALE - Player.MIN_SCALE) + Player.MIN_SCALE);
+		//this.setScale(factor * (Player.MAX_SCALE - Player.MIN_SCALE) + Player.MIN_SCALE);
 	}
 };
 
