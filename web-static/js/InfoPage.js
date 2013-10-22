@@ -2,7 +2,6 @@
 var InfoPage = function(){
 	Page.call(this, "");
 	
-	// Objet JQuery => un dollar ($) devant un objet pour savoir que c'est un objet JQuery (c'est juste une convention)
 	this.$playerPreview = $("<div/>").addClass("player-preview");
 	this.append(this.$playerPreview);
 
@@ -28,39 +27,30 @@ var InfoPage = function(){
 InfoPage.prototype = new Page();
 
 InfoPage.prototype.refreshData = function(playerData){
-	for(var id in playerData){
-	
+	for(var i in playerData){
 		switch(i){
 		case "name":
 			this.$playerName.html(playerData.name);
 			break;
-		case "title" :
+		case "title":
 			this.$playerTitle.html(playerData.title);
 			break;
-		case "progress" :
+		case "progress":
 			this.$playerProgressIndic.css("width", Math.round(playerData.progress * 100) + '%');
-				break;
-		
+			break;
 		default:
-			if(typeof(this.attributeList[i]) != "undefined")
-				{
-					this.attributeList[id].html(playerData[id]).effect('pulsate',{times:5, duration: 300});
-				}
-				
+			if(typeof(this.attributeList[i]) != "undefined"){
+				this.attributeList[i].html(playerData[i]);
 			}
-				
+		}
 	}
-	
 };
-
 InfoPage.prototype.addAttribute = function(id, label){
-	//id = classe du dd
-	//label => dt
+	var dt = $("<dt>").append(label);
+	this.$attributeContainer.append(dt);
 	
-	var $dt = $("<dt>").append(label);
-	this.$attributeContainer.append($dt);
-	var $dd = $("<dd>").addClass(id).append(15);
-	this.$attributeContainer.append($dd);
+	var dd = $("<dd>").addClass(id);
+	this.$attributeContainer.append(dd);
 	
-	this.attributeList[id] = $dd;
+	this.attributeList[id] = dd;
 };
