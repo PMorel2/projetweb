@@ -2,6 +2,21 @@ var Player = function(parent){
 	var self = this;
 	Character.call(this, parent);
 	
+	
+	$(document).keyup(function(e){
+	
+		console.log("up" + e.which);
+		
+		self.onKeyUp(e.which);
+	});
+	
+	$(document).keydown(function(e){
+		console.log("keydown" + e.which);
+		
+		self.onKeyDown(e.which);
+
+	});
+	
 	this.speed = {
 		x: 600,
 		y: 200
@@ -36,7 +51,7 @@ Player.prototype.setPosition = function(x, y){
 	
 	if(this.y != lastY){
 		var factor = (y - Player.MIN_Y) / (Player.MAX_Y - Player.MIN_Y);
-		//this.setScale(factor * (Player.MAX_SCALE - Player.MIN_SCALE) + Player.MIN_SCALE);
+		this.setScale(factor * (Player.MAX_SCALE - Player.MIN_SCALE) + Player.MIN_SCALE);
 	}
 };
 
@@ -49,22 +64,44 @@ Player.prototype.setScale = function(scale){
 
 Player.prototype.update = function(deltaTime){
 	var move = {x: 0, y: 0};
+	console.log(this.keyList);
+	
 	// Q (113|81)
-
+	if(this.keyList[81] || this.keyList[113]){
+		move.x = -1;
+		this.revertDirection = true;
+	}
 	// S (115|83)
+	if(this.keyList[115] || this.keyList[83]){
+		move.y = 1;
+	}
 
 	// D (100|68)
+	if(this.keyList[100] || this.keyList[68]){
+		move.x = 1;
+		this.revertDirection = false;
+	}
 
 	// Z (122|90)
+	if(this.keyList[122] || this.keyList[90]){
+		move.y = -1;
+	}
 
+	if(move.x !=0 || move.y != 0){
+		this.move(move.x * this.speed.x * this.scale * deltaTime, move.y * this.speed.y * this.scale * deltaTime);
+		this.setSprite("move");
+	}else{
+		this.setSprite("idle");
+	}
 
 	// this.move(xDistance, yDistance)
 	// this.setSprite (move, idle)
 };
 
 Player.prototype.onKeyDown = function(k){
+	this.keyList[k] = true;
 
 };
 Player.prototype.onKeyUp = function(k){
-
+	this.keyList[k] = false;
 };

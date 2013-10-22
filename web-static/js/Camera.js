@@ -6,7 +6,7 @@ var Camera = function(scene, player){
 	
 	this.player.addPositionListener(function(x, y){
 		self.refreshView(x, y);
-	});			///////////////////////////////////////////////////////////////////////////////////////
+	});	
 	
 	this.x = 0;
 	this.y = 0;

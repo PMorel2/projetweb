@@ -128,7 +128,12 @@ Sprite.prototype.refreshDisplay = function(){
 	if(this.invertAnim){
 		frame = this.frameCount - this.currentFrame - 1;
 	}
-	// TODO
+	
+	var col = frame % this.colCount;
+	var row = Math.floor(frame / this.colCount);
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	this.$img[0].style.left = -Math.round(this.width * this.scale * col) + "px";
+	this.$img[0].style.top = -Math.round(this.height * this.scale * row) + "px";
 };
 Sprite.prototype.setFrameRate = function(frameRate){
 	this.frameRate = frameRate;
