@@ -29,10 +29,28 @@ InfoPage.prototype = new Page();
 
 InfoPage.prototype.refreshData = function(playerData){
 	for(var id in playerData){
-		this.attributeList[id].html(playerData[id]).effect('pulsate',{times:5, duration: 300});
+	
+		switch(i){
+		case "name":
+			this.$playerName.html(playerData.name);
+			break;
+		case "title" :
+			this.$playerTitle.html(playerData.title);
+			break;
+		case "progress" :
+			this.$playerProgressIndic.css("width", Math.round(playerData.progress * 100) + '%');
+				break;
 		
-		this.$playerProgressIndic.css("width", playerData);
+		default:
+			if(typeof(this.attributeList[i]) != "undefined")
+				{
+					this.attributeList[id].html(playerData[id]).effect('pulsate',{times:5, duration: 300});
+				}
+				
+			}
+				
 	}
+	
 };
 
 InfoPage.prototype.addAttribute = function(id, label){
