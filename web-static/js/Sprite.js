@@ -1,7 +1,7 @@
-var Sprite = function(parent, id, url, width, height, colCount, rowCount, loop){
+var Sprite = function(id, image, width, height, colCount, rowCount, loop){
+	this.image = image;
 	this.id = id;
 	this.loop = loop;
-	this.parent = parent;
 	this.rowCount = rowCount;
 	this.colCount = colCount;
 	this.frameCount = this.rowCount * this.colCount;
@@ -18,30 +18,30 @@ var Sprite = function(parent, id, url, width, height, colCount, rowCount, loop){
 	this.x = 0;
 	this.y = 0;
 	
-	this.$elm = $("<div>").css({
+	/*this.$elm = $("<div>").css({
 		position: "absolute",
 		top: "0px",
 		overflow: "hidden",
 		left: "0px"
 	});
-	this.parent.append(this.$elm);
+	this.parent.append(this.$elm);*/
 	this.hide();
 	this.onAnimationComplete = false;
 	
-	this.$img = $("<img>").css({
+	/*this.$img = $("<img>").css({
 		position: "absolute",
 		left: "0",
 		top: "0",
 		width: this.imgWidth + 'px',
 		height: this.imgHeight + 'px'
-	});
+	});*/
 	this.width = Math.round(this.imgWidth / this.colCount);
 	this.height = Math.round(this.imgHeight / this.rowCount);
-	this.$elm.width(this.width).height(this.height).append(this.$img);
+	//this.$elm.width(this.width).height(this.height).append(this.$img);
 	
-	if(url){
+	/*if(url){
 		this.setUrl(url);
-	}
+	}*/
 };
 
 Sprite.prototype.setUrl = function(url){
@@ -56,25 +56,26 @@ Sprite.prototype.setPosition = function(x, y){
 	this.refreshPosition();
 };
 
+
 Sprite.prototype.setCenter = function(x, y){
 	this.centerX = x;
 	this.centerY = y;
 	this.refreshPosition();
 };
 Sprite.prototype.refreshPosition = function(){
-	this.$elm[0].style.left = Math.round(this.x - this.scale * this.centerX) + "px";
-	this.$elm[0].style.top = Math.round(this.y - this.scale * this.centerY) + "px";
+	//this.$elm[0].style.left = Math.round(this.x - this.scale * this.centerX) + "px";
+	//this.$elm[0].style.top = Math.round(this.y - this.scale * this.centerY) + "px";
 };
 Sprite.prototype.show = function(type, options){
 	if(this.loop){
 		this.currentFrame = 0;
 		this.play();
 	}
-	this.$elm.show(type, options);
+	//this.$elm.show(type, options);
 };
 Sprite.prototype.hide = function(hideType){
 	this.stop();
-	this.$elm.hide(hideType);
+	//this.$elm.hide(hideType);
 };
 Sprite.prototype.play = function(onComplete){
 	var _this = this;
@@ -97,7 +98,6 @@ Sprite.prototype.play = function(onComplete){
 Sprite.prototype.resetAnim = function(){
 	this.stop();
 	this.currentFrame = 0;
-	this.refreshDisplay();
 };
 Sprite.prototype.stop = function(){
 	if(this.player){
@@ -117,23 +117,29 @@ Sprite.prototype.nextFrame = function(frames){
 			this.currentFrame = this.frameCount - 1;
 		}
 	}
-	this.refreshDisplay();
-	if(this.currentFrame == this.frameCount - 1 && !this.loop && this.onAnimationComplete){
-		this.onAnimationComplete(this);
-		this.onAnimationComplete = false;
-	}
 };
-Sprite.prototype.refreshDisplay = function(){
+Sprite.prototype.render = function(g, revertDirection){
 	var frame = this.currentFrame;
 	if(this.invertAnim){
 		frame = this.frameCount - this.currentFrame - 1;
 	}
+	if (revertDirection)
+	{
+		g.scale(-this.scale, this.scale);
+	}
+	else
+	{
+		g.scale(this.scale, this.scale);
+	}
 	
 	var col = frame % this.colCount;
 	var row = Math.floor(frame / this.colCount);
+	
+	g.drawImage(this.image, this.width * col, this.height * row, this.width, this.height, -this.centerX, -this.centerY, this.width, this.height); //sx, sy, sw, sh
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	this.$img[0].style.left = -Math.round(this.width * this.scale * col) + "px";
-	this.$img[0].style.top = -Math.round(this.height * this.scale * row) + "px";
+	/*this.$img[0].style.left = -Math.round(this.width * this.scale * col) + "px";
+	this.$img[0].style.top = -Math.round(this.height * this.scale * row) + "px";*/
 };
 Sprite.prototype.setFrameRate = function(frameRate){
 	this.frameRate = frameRate;
@@ -142,11 +148,6 @@ Sprite.prototype.setFrameRate = function(frameRate){
 Sprite.prototype.setScale = function(scale){
 	if(this.scale != scale){
 		this.scale = scale;
-		this.$elm.width(Math.round(this.width * this.scale));
-		this.$elm.height(Math.round(this.height * this.scale));
-		this.$img.width(Math.round(this.width * this.scale * this.colCount));
-		this.$img.height(Math.round(this.height * this.scale * this.rowCount));
-		this.refreshDisplay();
 		this.refreshPosition();
 	}
 };

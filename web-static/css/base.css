@@ -19,7 +19,7 @@ html, body{
 }
 #screen{
 	position: absolute;
-	width: 1024px;
+	width: 800px;
 	height: 600px;
 	background: white;
 	top: 50%;

@@ -1,11 +1,4 @@
-var Character = function(parent){
-	if(typeof(parent) == "undefined"){
-		return;
-	}
-	this.parent = parent;
-	this.$elm = $("<div>").addClass("character");
-
-	this.parent.append(this.$elm);
+var Character = function(){
 
     this.revertDirection = false;
 
@@ -17,13 +10,19 @@ var Character = function(parent){
 
 Character.prototype.addPositionListener = function(listener){
 	// TODO
-	this.positionListenerList.push(listener);
+		this.positionListenerList.push(listener);
 	
 };
 
+Character.prototype.createSprite = function(id, image, width, height, colCount, rowCount, loop){
+	this.spriteList[id] = new Sprite(id, image, width, height, colCount, rowCount, loop);
+	console.log("id : " + id);
+};
+
+
 Character.prototype.setSprite = function(anim, onComplete){
 	this.lastAnimId = anim;
-	var spriteId = anim + "-" + (this.revertDirection?"left":"right");
+	var spriteId = anim;
 	//console.log("new anim " + spriteId);
 	if(this.currentSprite != this.spriteList[spriteId]){
 		if(!this.currentSprite || this.currentSprite.loop || this.currentSprite.currentFrame == this.currentSprite.frameCount - 1){
@@ -31,6 +30,7 @@ Character.prototype.setSprite = function(anim, onComplete){
 				this.currentSprite.stop();
 				this.currentSprite.hide();
 			}
+			console.log("sprite ID : " + spriteId);
 			this.currentSprite = this.spriteList[spriteId];
 			this.currentSprite.resetAnim();
 			this.currentSprite.play(onComplete);
@@ -41,16 +41,26 @@ Character.prototype.setSprite = function(anim, onComplete){
 	}
 };
 
+Character.prototype.render = function(g){
+	if(this.currentSprite)
+	{
+		g.save();
+		g.translate(this.x, this.y);
+	
+		this.currentSprite.render(g, this.revertDirection);
+		g.restore();
+	}
+}
+
 Character.prototype.setPosition = function(x, y){
 	// TODO
 	this.x = parseInt(x);
 	this.y = parseInt(y);
-	
-//	this.$elm.css("top", "20px");
+/*	this.$elm.css("top", "20px");
 	this.$elm.css({
 		top: this.y + "px",
 		left: this.x + "px"
-	});
+	});*/
 	
 	for(var i in this.positionListenerList)
 	{

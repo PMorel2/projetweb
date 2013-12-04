@@ -1,6 +1,6 @@
-var Player = function(parent){
+var Player = function(assetManager){
 	var self = this;
-	Character.call(this, parent);
+	Character.call(this);
 	
 	
 	$(document).keyup(function(e){
@@ -22,20 +22,26 @@ var Player = function(parent){
 		y: 200
 	};
 
-	this.spriteList = {
-		"idle-left": new Sprite(this.$elm, "idle-left", "/projetweb-static/img/sprite/revert-idle-1-2-1.png", 2048, 256, 16, 2, true),
-		"idle-right": new Sprite(this.$elm, "idle-right", "/projetweb-static/img/sprite/idle-1-2-1.png", 2048, 256, 16, 2, true),
-		"attack-left": new Sprite(this.$elm, "attack-left", "/projetweb-static/img/sprite/revert-attack-1-2-1.png", 2048, 128, 16, 1, false),
-		"attack-right": new Sprite(this.$elm, "attack-right", "/projetweb-static/img/sprite/attack-1-2-1.png", 2048, 128, 16, 1, false),
-		"move-left": new Sprite(this.$elm, "move-left", "/projetweb-static/img/sprite/revert-move-1-2-1.png", 896, 128, 7, 1, true),
-		"move-right": new Sprite(this.$elm, "move-right", "/projetweb-static/img/sprite/move-1-2-1.png", 896, 128, 7, 1, true)
-	};
+	this.createSprite("idle", assetManager.getImage("player-idle"), 2048, 256, 16, 2, true);
+	this.createSprite("attack", assetManager.getImage("player-attack"), 2048, 128, 16, 1, false);
+	this.createSprite("move", assetManager.getImage("player-move"), 896, 128, 7, 1, true);
+	
+	this.centerX = 64;
+	this.centerY = 120
+	
+	for(var i in this.spriteList){
+		this.spriteList[i].setCenter(this.centerX, this.centerY);
+	}
+	
+	this.spriteList["move"].frameCount = 6;
+	this.revertDirection = false
+	this.setSprite("idle");
 
 	this.keyList = {};
-	this.spriteList["move-left"].frameCount = 6;
+	/*this.spriteList["move-left"].frameCount = 6;
 	this.spriteList["move-right"].frameCount = 6;
 	this.revertDirection = false;
-	this.setSprite("idle");
+	this.setSprite("idle");*/
 };
 Player.MIN_Y = 1455;
 Player.MAX_Y = 1920;
@@ -64,7 +70,6 @@ Player.prototype.setScale = function(scale){
 
 Player.prototype.update = function(deltaTime){
 	var move = {x: 0, y: 0};
-	console.log(this.keyList);
 	
 	// Q (113|81)
 	if(this.keyList[81] || this.keyList[113]){
@@ -94,12 +99,16 @@ Player.prototype.update = function(deltaTime){
 		this.setSprite("idle");
 	}
 
-	// this.move(xDistance, yDistance)
-	// this.setSprite (move, idle)
 };
 
 Player.prototype.onKeyDown = function(k){
 	this.keyList[k] = true;
+	//space
+	if(k == 32){
+		this.setSprite("attack");
+		
+		
+	}
 
 };
 Player.prototype.onKeyUp = function(k){

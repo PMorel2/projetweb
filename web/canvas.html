@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<style>
+canvas{
+	width: 400px;
+	height: 500px;
+	position: absolute;
+	left : 0;
+}
+</style>
+<script>
+	function start(){
+		var canvas = document.getElementById("myCanvas");
+		var g = canvas.getContext("2d");
+		g.fillStyle = "red";				//fillstyle : dessiner + remplir
+		g.fillRect(0,0, canvas.width, canvas.height);
+		g.fillStyle = "blue";				//stroke : dessiner contour
+		g.strokeRect(100,100, canvas.width / 2 -50, canvas.height /2 -50);
+	}
+
+
+</script>
+</head>
+<body onload="start()">
+<canvas id = "myCanvas" width="400" height="300"></canvas>
+</body>
+</html>
+
+<!--le canvas est un objet html, on peut appliquer du css comme un background, width, height...
+	C'est une image.
+
+	
+-->
